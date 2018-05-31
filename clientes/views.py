@@ -1,15 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from .forms import PersonForm
 from .models import Person
-
-
-# def persons_list(request):
-#     persons = Person.objects.all()
-#     return render(request, 'person_list.html', {'persons': persons})
 
 
 class PersonList(ListView):
@@ -30,34 +24,33 @@ class PersonDetail(DetailView):
     model = Person
 
 
-@login_required
-def persons_new(request):
-    form = PersonForm(request.POST or None, request.FILES or None)
-
-    if form.is_valid():
-        form.save()
-        return redirect('person_list')
-    return render(request, 'person_form.html', {'form': form})
-
-
-@login_required
-def persons_update(request, id):
-    person = get_object_or_404(Person, pk=id)
-    form = PersonForm(request.POST or None, request.FILES or None, instance=person)
-
-    if form.is_valid():
-        form.save()
-        return redirect('person_list')
-
-    return render(request, 'person_form.html', {'form': form})
+@method_decorator(login_required, name='dispatch')
+class PersonCreate(CreateView):
+    """
+    Esta CBV permite gerenciar a criação de usuários, permitindo substituir, no atributo fields passamos os atributos
+    do objeto que queremos no formulários, a success_url é onde irá caso esteja OK.
+    """
+    model = Person
+    fields = ['first_name', 'last_name', 'age', 'salary', 'bio', 'photo']
+    success_url = reverse_lazy('person_list')
 
 
-@login_required
-def persons_delete(request, id):
-    person = get_object_or_404(Person, pk=id)
+@method_decorator(login_required, name='dispatch')
+class PersonUpdate(UpdateView):
+    """
+    Similar ao CreateView, apenas implementamos o método get_success_url ao invés de definir success_url, assim temos
+    mais controle no caso de sucesso.
+    """
+    model = Person
+    template_name = 'clientes/person_form.html'
+    fields = ['first_name', 'last_name', 'age', 'salary', 'bio', 'photo']
+    # success_url = reverse_lazy('person_list')
 
-    if request.method == 'POST':
-        person.delete()
-        return redirect('person_list')
+    def get_success_url(self):
+        return reverse_lazy('person_list')
 
-    return render(request, 'person_delete_confirm.html', {'person': person})
+
+@method_decorator(login_required, name='dispatch')
+class PersonDelete(DeleteView):
+    model = Person
+    success_url = reverse_lazy('person_list')

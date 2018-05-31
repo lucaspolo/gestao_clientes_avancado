@@ -14,15 +14,18 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="jumbotron">
-            {% block main %}
-            {% endblock %}
-        </div>
+<div class="container">
+    <div class="jumbotron">
+        {% block main %}
+        {% endblock %}
     </div>
+</div>
 
-    {% block footer %}
-    {% endblock %}
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Desenvolvimento web com Django 2.x avançado! - <a href="{% url 'about' %}">Sobre</a></span>
+    </div>
+</footer>
 
 </body>
 </html>

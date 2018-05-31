@@ -13,12 +13,17 @@
         <div class="col-6">
             <h3>Listagem de clientes</h3>
             <ul class="list-group">
-                {% for person in persons %}
+                {% for person in object_list %}
                     <li class="list-group-item">
-                        <a href="{% url 'persons_update' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
-                        <a href="{% url 'persons_delete' person.id %}" class="trash-item">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
+                        <a href="{% url 'person_detail' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
+                        <div class="trash-item">
+                            <a href="{% url 'persons_update' person.id %}">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a href="{% url 'persons_delete' person.id %}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </li>
 
                 {% endfor %}
@@ -43,12 +48,4 @@
     </div>
 
 
-{% endblock %}
-
-{% block footer %}
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Desenvolvimento web com Django 2.x</span>
-      </div>
-    </footer>
 {% endblock %}

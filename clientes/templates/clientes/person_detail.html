@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Administracao {% endblock %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col">
+
+        </div>
+
+        <div class="col-8">
+            <h3>Cliente: {{ object.first_name }} {{ object.last_name }}</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Idade</th>
+                    <th>Salário</th>
+                    <th>Bio</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ object.age }}</td>
+                    <td>R$ {{ object.salary }}</td>
+                    <td>{{ object.bio }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="{% url 'person_list' %}" class="btn btn-primary">Voltar</a>
+        </div>
+
+        <div class="col">
+            {% if user.is_authenticated %}
+                <p>Ola {{ user.username }}
+                    <a href="{% url 'logout' %}">
+                        <span class="badge badge-dark">Sair</span>
+                    </a>
+                </p>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

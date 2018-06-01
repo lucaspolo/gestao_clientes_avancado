@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load filters %}
 
 {% block title %} Administracao {% endblock %}
 
@@ -27,7 +27,8 @@
                             </div>
                         {% endif %}
                     </li>
-
+                {% empty %}
+                    <li class="list-group-item">{{ "Nenhum cliente cadastrado."|bold_message }}</li>
                 {% endfor %}
             </ul>
 

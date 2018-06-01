@@ -13,6 +13,7 @@ class PersonList(ListView):
     passando a variável object_list onde está o iterável com as instâncias do banco.
     """
     model = Person
+    context_object_name = 'clientes'
 
 
 class PersonDetail(DetailView):
@@ -21,6 +22,7 @@ class PersonDetail(DetailView):
     dentro do template ele irá injetar um object com as informações do cliente.
     """
     model = Person
+    context_object_name = 'cliente'
 
 
 @method_decorator(login_required, name='dispatch')

@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-8">
-            <h3>Cliente: {{ object.first_name }} {{ object.last_name }}</h3>
+            <h3>Cliente: {{ cliente.first_name }} {{ cliente.last_name }}</h3>
             <table class="table">
                 <thead>
                 <tr>
@@ -22,9 +22,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ object.age }}</td>
-                    <td>R$ {{ object.salary }}</td>
-                    <td>{{ object.bio }}</td>
+                    <td>{{ cliente.age }}</td>
+                    <td>R$ {{ cliente.salary }}</td>
+                    <td>{{ cliente.bio }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -16,14 +16,16 @@
                 {% for person in object_list %}
                     <li class="list-group-item">
                         <a href="{% url 'person_detail' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
-                        <div class="trash-item">
-                            <a href="{% url 'persons_update' person.id %}">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'persons_delete' person.id %}">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </div>
+                        {% if user.is_authenticated %}
+                            <div class="trash-item">
+                                <a href="{% url 'persons_update' person.id %}">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                                <a href="{% url 'persons_delete' person.id %}">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        {% endif %}
                     </li>
 
                 {% endfor %}
@@ -37,12 +39,15 @@
 
         <div class="col">
             {% if user.is_authenticated %}
-                <p>Ola {{user.username }}
+                <p>Olá {{ user.username }}
                     <a href="{% url 'logout' %}">
                         <span class="badge badge-dark">Sair</span>
                     </a>
                 </p>
-
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <span class="badge badge-dark">Login</span>
+                </a>
             {% endif %}
         </div>
     </div>

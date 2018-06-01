@@ -15,7 +15,6 @@ class PersonList(ListView):
     model = Person
 
 
-@method_decorator(login_required, name='dispatch')
 class PersonDetail(DetailView):
     """
     Este tipo de view (DetailView) se atrela ao objeto para buscar informações de um objeto específico,

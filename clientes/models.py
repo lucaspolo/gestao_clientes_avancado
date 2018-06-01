@@ -17,6 +17,12 @@ class Person(models.Model):
     photo = models.ImageField(upload_to='clients_photos', null=True, blank=True)
     doc = models.OneToOneField(Documento, null=True, blank=True, on_delete=models.CASCADE)
 
+
+    @property
+    def nome_completo(self):
+        return f"{self.first_name} {self.last_name}"
+
+
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 

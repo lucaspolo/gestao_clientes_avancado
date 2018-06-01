@@ -15,7 +15,7 @@
             <ul class="list-group">
                 {% for person in clientes %}
                     <li class="list-group-item">
-                        <a href="{% url 'person_detail' person.id %}">{{ person.first_name }} {{ person.last_name }}</a>
+                        <a href="{% url 'person_detail' person.id %}">{{ person.nome_completo|title }}</a>
                         {% if user.is_authenticated %}
                             <div class="trash-item">
                                 <a href="{% url 'persons_update' person.id %}">

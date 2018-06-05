@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.base import View
 
-from .models import Person
+from .models import Person, Produto
 
 
 class PersonList(ListView):
@@ -55,3 +57,20 @@ class PersonUpdate(UpdateView):
 class PersonDelete(DeleteView):
     model = Person
     success_url = reverse_lazy('person_list')
+
+# Criação de objetos no banco por Bulk Create
+
+
+class ProdutoBulk(View):
+
+    def get(self, request):
+        produtos = ['Banana', 'Maça', 'Limão', 'Laranja', 'Pera', 'Melancia']
+        lista_produtos = []
+
+        for produto in produtos:
+            p = Produto(descricao=produto, preco=10)
+            lista_produtos.append(p)
+
+        Produto.objects.bulk_create(lista_produtos)
+
+        return redirect('person_list')

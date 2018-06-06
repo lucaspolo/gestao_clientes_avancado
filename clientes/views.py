@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
+from django.views.generic.list import BaseListView
 
 from .models import Person, Produto
 
@@ -16,6 +17,17 @@ class PersonList(ListView):
     """
     model = Person
     context_object_name = 'clientes'
+
+
+class RichPeopleList(ListView):
+    """
+    Herdando de ListView e sobrescrevendo o método get_queryset com o filtro para pegar salarios maiores e iguais a 1000
+    """
+    template_name = 'clientes/person_list'
+    context_object_name = "clientes"
+
+    def get_queryset(self):
+        return Person.objects.filter(salary__gte=1000)
 
 
 class PersonDetail(DetailView):
@@ -74,3 +86,4 @@ class ProdutoBulk(View):
         Produto.objects.bulk_create(lista_produtos)
 
         return redirect('person_list')
+

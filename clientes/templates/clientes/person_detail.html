@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block title %} Administracao {% endblock %}
@@ -25,9 +26,13 @@
                     <td>{{ cliente.age }}</td>
                     <td>R$ {{ cliente.salary }}</td>
                     <td>{{ cliente.bio }}</td>
+
                 </tr>
                 </tbody>
             </table>
+            {% if cliente.photo %}
+                <img class="img-fluid img-thumbnail mx-auto d-block" src="{{ cliente.photo.url }}" alt=""><br/>
+            {% endif %}
             <a href="{% url 'person_list' %}" class="btn btn-primary">Voltar</a>
         </div>
 

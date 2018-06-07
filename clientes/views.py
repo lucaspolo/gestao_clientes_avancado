@@ -18,6 +18,8 @@ class PersonList(ListView):
     model = Person
     context_object_name = 'clientes'
 
+    ordering = ['-salary']
+
 
 class RichPeopleList(ListView):
     """
@@ -27,7 +29,7 @@ class RichPeopleList(ListView):
     context_object_name = "clientes"
 
     def get_queryset(self):
-        return Person.objects.filter(salary__gte=1000)
+        return Person.objects.filter(salary__gte=1000).order_by('-salary')
 
 
 class PersonDetail(DetailView):
@@ -73,6 +75,7 @@ class PersonDelete(DeleteView):
 # Criação de objetos no banco por Bulk Create
 
 
+@method_decorator(login_required, name='dispatch')
 class ProdutoBulk(View):
 
     def get(self, request):

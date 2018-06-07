@@ -1,9 +1,12 @@
-from django.urls import path
+from django.urls import path, reverse_lazy
+from django.views.generic import RedirectView
 
 from .views import PersonList, PersonDetail, PersonCreate, PersonUpdate, PersonDelete, RichPeopleList
 from .views import ProdutoBulk
 
+
 urlpatterns = [
+    path('', RedirectView.as_view(url=reverse_lazy('person_list')), name="root"),
     path('list/', PersonList.as_view(), name="person_list"),
     path('rich_list/', RichPeopleList.as_view(), name="rich_list"),
     path('detail/<int:pk>', PersonDetail.as_view(), name="person_detail"),

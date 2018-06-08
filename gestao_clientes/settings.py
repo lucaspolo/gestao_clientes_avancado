@@ -133,10 +133,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     'statics',
 ]
+STATIC_URL = '/static/'
 
-if DEBUG:
-    STATIC_URL = '/static/'
-else:
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+
+if AWS_ACCESS_KEY_ID:
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')

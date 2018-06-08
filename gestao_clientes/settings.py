@@ -134,9 +134,11 @@ STATICFILES_DIRS = [
     'statics',
 ]
 
-if DEBUG:
-    STATIC_URL = '/static/'
-else:
+STATIC_URL = '/static/'
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+
+if AWS_ACCESS_KEY_ID:
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')

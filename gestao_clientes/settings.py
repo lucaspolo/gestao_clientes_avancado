@@ -133,6 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     'statics',
 ]
+
 STATIC_URL = '/static/'
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')

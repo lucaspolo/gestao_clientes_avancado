@@ -4,6 +4,11 @@ from .models import Person, Documento, Venda, Produto
 
 
 class PersonAdmin(admin.ModelAdmin):
+    """
+    Classe sobrescreve o padrão do Admin para Person
+    """
+
+    # Irá descrever como os dados são apresentados em telas de cadastro
     fieldsets = (
         (
             'Dados pessoais',

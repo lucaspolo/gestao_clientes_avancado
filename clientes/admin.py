@@ -24,7 +24,16 @@ class PersonAdmin(admin.ModelAdmin):
         )
     )
     # fields = ['doc', ('first_name', 'last_name'), ('age', 'salary'), 'bio', 'photo']
-    list_display = ['nome_completo', 'age', 'salary', 'bio', 'photo', 'doc'] #Descreve quais dados são exibidos
+
+    list_display = ['nome_completo', 'age', 'salary', 'bio', 'tem_foto', 'doc'] #Descreve quais dados são exibidos
+
+    def tem_foto(self, obj: Person) -> bool:
+        if obj.photo:
+            return 'Sim'
+        else:
+            return 'Não'
+
+    tem_foto.short_description = "Possui foto?"
 
     class SalaryListFilter(admin.SimpleListFilter):
         """
@@ -36,9 +45,6 @@ class PersonAdmin(admin.ModelAdmin):
         def lookups(self, request, model_admin):
             """
             Define quais os nomes das faixas e suas descrições (estas exibidas em tela)
-            :param request:
-            :param model_admin:
-            :return:
             """
             return (
                 ('<10000', _('Menor que 10 mil')),
@@ -48,9 +54,6 @@ class PersonAdmin(admin.ModelAdmin):
         def queryset(self, request, queryset):
             """
             Método que efetivamente filtra, chamado uma vez para cada faixa
-            :param request:
-            :param queryset:
-            :return:
             """
             if self.value() == '<10000':
                 return queryset.filter(salary__lt = 10000)

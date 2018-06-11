@@ -27,7 +27,7 @@ class PersonAdmin(admin.ModelAdmin):
 
     list_display = ['nome_completo', 'age', 'salary', 'bio', 'tem_foto', 'doc'] #Descreve quais dados são exibidos
 
-    def tem_foto(self, obj: Person) -> bool:
+    def tem_foto(self, obj: Person):
         if obj.photo:
             return 'Sim'
         else:
@@ -64,7 +64,21 @@ class PersonAdmin(admin.ModelAdmin):
     list_filter = (SalaryListFilter, )
 
 
+class VendaAdmin(admin.ModelAdmin):
+    list_filter = ('pessoa__doc', 'desconto')
+    list_display = ('id', 'pessoa', 'get_total')
+
+    def get_total(self, obj: Venda):
+        return obj.get_total()
+
+    get_total.short_description = 'Valor total'
+
+
+class ProdutoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'descricao', 'preco')
+
+
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Documento)
-admin.site.register(Venda)
-admin.site.register(Produto)
+admin.site.register(Venda, VendaAdmin)
+admin.site.register(Produto, ProdutoAdmin)

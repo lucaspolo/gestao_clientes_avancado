@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 
 class Documento(models.Model):
@@ -52,3 +54,18 @@ class Venda(models.Model):
 
     def __str__(self):
         return self.numero
+
+
+@receiver(m2m_changed, sender=Venda.produtos.through)
+def update_vendas_total(sender, instance: Venda, **kwargs):
+    """
+    Funcao que sera executada quando houver mudanca m2m
+    :param sender:
+    :param instance:
+    :param kwargs:
+    :return:
+    """
+    instance.valor = instance.get_total()
+    instance.save()
+    # total = instance.get_total()
+    # venda.objects.filter(id=instance.id).update(total=total)

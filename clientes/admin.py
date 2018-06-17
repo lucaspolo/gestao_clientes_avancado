@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+
+from clientes.actions import make_nfe_emitida
 from .models import Person, Documento, Venda, Produto
 
 
@@ -67,7 +69,7 @@ class PersonAdmin(admin.ModelAdmin):
 class VendaAdmin(admin.ModelAdmin):
     readonly_fields = ('valor',)
     list_filter = ('pessoa__doc', 'desconto',)
-    list_display = ('id', 'pessoa', 'valor',)
+    list_display = ('id', 'pessoa', 'valor', 'nfe_emitida')
     raw_id_fields = ('pessoa',)
 
     def get_total(self, obj: Venda):
@@ -76,6 +78,8 @@ class VendaAdmin(admin.ModelAdmin):
     get_total.short_description = 'Valor total'
 
     search_fields = ('id', 'pessoa__first_name', 'pessoa__doc__num_doc')
+
+    actions = [make_nfe_emitida]
 
 
 class ProdutoAdmin(admin.ModelAdmin):

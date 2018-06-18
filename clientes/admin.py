@@ -81,6 +81,8 @@ class VendaAdmin(admin.ModelAdmin):
 
     actions = [make_nfe_emitida]
 
+    filter_horizontal = ['produtos',]
+
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('id', 'descricao', 'preco')

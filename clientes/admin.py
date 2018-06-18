@@ -27,6 +27,8 @@ class PersonAdmin(admin.ModelAdmin):
     )
     # fields = ['doc', ('first_name', 'last_name'), ('age', 'salary'), 'bio', 'photo']
 
+    search_fields = ('id', 'first_name', 'last_name',)
+
     list_display = ['nome_completo', 'age', 'salary', 'bio', 'tem_foto', 'doc'] #Descreve quais dados são exibidos
 
     def tem_foto(self, obj: Person):
@@ -70,7 +72,7 @@ class VendaAdmin(admin.ModelAdmin):
     readonly_fields = ('valor',)
     list_filter = ('pessoa__doc', 'desconto',)
     list_display = ('id', 'pessoa', 'valor', 'nfe_emitida')
-    raw_id_fields = ('pessoa',)
+    autocomplete_fields = ('pessoa',)
 
     def get_total(self, obj: Venda):
         return obj.get_total()
@@ -86,6 +88,7 @@ class VendaAdmin(admin.ModelAdmin):
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('id', 'descricao', 'preco')
+    search_fields = ('id', 'descricao',)
 
 
 admin.site.register(Person, PersonAdmin)

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from clientes.actions import make_nfe_emitida
-from .models import Person, Documento, Venda, Produto
+from .models import Person, Documento, Venda, Produto, ItensDoPedido
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -83,7 +83,7 @@ class VendaAdmin(admin.ModelAdmin):
 
     actions = [make_nfe_emitida]
 
-    filter_horizontal = ['produtos',]
+    # filter_horizontal = ['produtos',]
 
 
 class ProdutoAdmin(admin.ModelAdmin):
@@ -95,3 +95,4 @@ admin.site.register(Person, PersonAdmin)
 admin.site.register(Documento)
 admin.site.register(Venda, VendaAdmin)
 admin.site.register(Produto, ProdutoAdmin)
+admin.site.register(ItensDoPedido)

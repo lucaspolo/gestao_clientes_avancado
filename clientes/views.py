@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.views.generic.base import View
 from django.views.generic.list import BaseListView
 
-from .models import Person, Produto
+from .models import Person
+from produtos.models import Produto
 
 
 class PersonList(ListView):

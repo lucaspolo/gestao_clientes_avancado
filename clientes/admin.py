@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from clientes.actions import make_nfe_emitida
-from .models import Person, Documento, Venda, Produto, ItensDoPedido
+from .models import Person, Documento
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -29,7 +28,7 @@ class PersonAdmin(admin.ModelAdmin):
 
     search_fields = ('id', 'first_name', 'last_name',)
 
-    list_display = ['nome_completo', 'age', 'salary', 'bio', 'tem_foto', 'doc'] #Descreve quais dados são exibidos
+    list_display = ['nome_completo', 'age', 'salary', 'bio', 'tem_foto', 'doc']  # Descreve quais dados são exibidos
 
     def tem_foto(self, obj: Person):
         if obj.photo:
@@ -43,8 +42,8 @@ class PersonAdmin(admin.ModelAdmin):
         """
         Esta classe permite que seja criado filtros para o Django Admin
         """
-        title = _('Faixa salarial') # Titulo exibido
-        parameter_name =  'salary' # Parametro que se baseia o filtro
+        title = _('Faixa salarial')  # Titulo exibido
+        parameter_name = 'salary'  # Parametro que se baseia o filtro
 
         def lookups(self, request, model_admin):
             """
@@ -60,39 +59,13 @@ class PersonAdmin(admin.ModelAdmin):
             Método que efetivamente filtra, chamado uma vez para cada faixa
             """
             if self.value() == '<10000':
-                return queryset.filter(salary__lt = 10000)
+                return queryset.filter(salary__lt=10000)
 
             if self.value() == '>=10000':
                 return queryset.filter(salary__gte=10000)
 
-    list_filter = (SalaryListFilter, )
-
-
-class VendaAdmin(admin.ModelAdmin):
-    readonly_fields = ('valor',)
-    list_filter = ('pessoa__doc', 'desconto',)
-    list_display = ('id', 'pessoa', 'valor', 'nfe_emitida')
-    autocomplete_fields = ('pessoa',)
-
-    def get_total(self, obj: Venda):
-        return obj.get_total()
-
-    get_total.short_description = 'Valor total'
-
-    search_fields = ('id', 'pessoa__first_name', 'pessoa__doc__num_doc')
-
-    actions = [make_nfe_emitida]
-
-    # filter_horizontal = ['produtos',]
-
-
-class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'descricao', 'preco')
-    search_fields = ('id', 'descricao',)
+    list_filter = (SalaryListFilter,)
 
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Documento)
-admin.site.register(Venda, VendaAdmin)
-admin.site.register(Produto, ProdutoAdmin)
-admin.site.register(ItensDoPedido)

@@ -2,11 +2,15 @@ from django.contrib import admin
 
 # Register your models here.
 from vendas.actions import make_nfe_emitida
-from vendas.models import Venda, ItensDoPedido
+from vendas.models import Venda, ItemDoPedido
+
+class ItemPedidoInLine(admin.TabularInline):
+    model = ItemDoPedido
+    extra = 1
 
 
 class VendaAdmin(admin.ModelAdmin):
-    readonly_fields = ('valor',)
+    # readonly_fields = ('valor',)
     list_filter = ('pessoa__doc', 'desconto',)
     list_display = ('id', 'pessoa', 'valor', 'nfe_emitida')
     autocomplete_fields = ('pessoa',)
@@ -20,8 +24,10 @@ class VendaAdmin(admin.ModelAdmin):
 
     actions = [make_nfe_emitida]
 
+    inlines = [ItemPedidoInLine, ]
+
     # filter_horizontal = ['produtos',]
 
 
 admin.site.register(Venda, VendaAdmin)
-admin.site.register(ItensDoPedido)
+admin.site.register(ItemDoPedido)

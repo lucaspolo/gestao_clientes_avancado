@@ -22,7 +22,7 @@ class Venda(models.Model):
             tot_pedido=Sum((F('quantidade') * F('produto__preco')) - F('desconto'), output_field=FloatField())
         )['tot_pedido'] or 0
 
-        total = total - float(self.impostos - self.desconto)
+        total = total - float(self.impostos) - float(self.desconto)
 
         self.valor = total
         Venda.objects.filter(id=self.id).update(valor=total)

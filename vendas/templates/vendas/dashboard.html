@@ -4,6 +4,11 @@
     <h1>Dashboard</h1>
 
     <ul>
+        <li>Número de pedidos: {{ numero_de_pedidos }}</li>
+        <li>Número de pedidos (com nota emitida): {{ numero_de_pedidos_nfe_emitida }}</li>
         <li>Valor médio da venda: R$ {{ media }}</li>
+        <li>Valor médio de desconto: R$ {{ media_desc }}</li>
+        <li>Maior valor de venda: R$ {{ max }}</li>
+        <li>Menor valor de venda: R$ {{ min }}</li>
     </ul>
 {% endblock %}

@@ -10,7 +10,7 @@ class ItemPedidoInLine(admin.TabularInline):
 
 
 class VendaAdmin(admin.ModelAdmin):
-    # readonly_fields = ('valor',)
+    readonly_fields = ('valor',)
     list_filter = ('pessoa__doc', 'desconto',)
     list_display = ('id', 'pessoa', 'valor', 'nfe_emitida')
     autocomplete_fields = ('pessoa',)

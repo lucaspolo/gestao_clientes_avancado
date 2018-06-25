@@ -7,6 +7,7 @@ from django.dispatch import receiver
 
 from clientes.models import Person
 from produtos.models import Produto
+from vendas.managers import VendaManager
 
 
 class Venda(models.Model):
@@ -16,6 +17,8 @@ class Venda(models.Model):
     impostos = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     pessoa = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
     nfe_emitida = models.BooleanField(default=False)
+
+    objects = VendaManager()
 
     def calcular_total(self):
         total = self.itemdopedido_set.all().aggregate(

@@ -8,12 +8,12 @@ from vendas.models import Venda
 
 class DashboardView(View):
     def get(self, request):
-        media = Venda.objects.all().aggregate(Avg('valor'))['valor__avg']
-        media_desc = Venda.objects.all().aggregate(Avg('desconto'))['desconto__avg']
-        min = Venda.objects.all().aggregate(Min('valor'))['valor__min']
-        max = Venda.objects.all().aggregate(Max('valor'))['valor__max']
-        numero_de_pedidos = Venda.objects.all().aggregate(Count('id'))['id__count']
-        numero_de_pedidos_nfe_emitida = Venda.objects.filter(nfe_emitida=True).aggregate(Count('id'))['id__count']
+        media = Venda.objects.media()
+        media_desc = Venda.objects.desconto_medio()
+        min = Venda.objects.venda_minima()
+        max = Venda.objects.venda_maxima()
+        numero_de_pedidos = Venda.objects.numero_de_pedidos()
+        numero_de_pedidos_nfe_emitida = Venda.objects.numero_de_pedidos_com_nfe_emitida()
 
         data = {
             'media': media,

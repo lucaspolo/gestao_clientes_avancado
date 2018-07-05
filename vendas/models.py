@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+#  Create your models here.
 from django.db.models import Sum, F, FloatField
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
@@ -19,6 +19,13 @@ class Venda(models.Model):
     nfe_emitida = models.BooleanField(default=False)
 
     objects = VendaManager()
+
+    class Meta:
+        permissions = (
+            ('setar_nfe', 'Usuário pode alterar parâmetro NF-e'),
+            ('permissao2', 'Permissao 2'),
+            ('permissao3', 'Permissao 3'),
+        )
 
     def calcular_total(self):
         total = self.itemdopedido_set.all().aggregate(

@@ -1,12 +1,18 @@
-from django.db.models import Avg, Min, Max, Count
+from django.http import HttpResponse
 from django.shortcuts import render
-
 from django.views import View
 
 from vendas.models import Venda
 
 
 class DashboardView(View):
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('vendas.ver_dashboard'):
+            return HttpResponse('<h1>Você não tem permissão para acessar este local.</h1>')
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         media = Venda.objects.media()
         media_desc = Venda.objects.desconto_medio()

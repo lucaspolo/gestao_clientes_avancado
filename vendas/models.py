@@ -23,7 +23,7 @@ class Venda(models.Model):
     class Meta:
         permissions = (
             ('setar_nfe', 'Usuário pode alterar parâmetro NF-e'),
-            ('permissao2', 'Permissao 2'),
+            ('ver_dashboard', 'Pode acessar o dashboard '),
             ('permissao3', 'Permissao 3'),
         )
 

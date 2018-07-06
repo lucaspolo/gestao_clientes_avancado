@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
-from django.views.generic.list import BaseListView
 
-from .models import Person
 from produtos.models import Produto
+from .models import Person
 
 
 class PersonList(ListView):
@@ -42,8 +42,7 @@ class PersonDetail(DetailView):
     context_object_name = 'cliente'
 
 
-@method_decorator(login_required, name='dispatch')
-class PersonCreate(CreateView):
+class PersonCreate(LoginRequiredMixin, CreateView):
     """
     Esta CBV permite gerenciar a criação de usuários, permitindo substituir, no atributo fields passamos os atributos
     do objeto que queremos no formulários, a success_url é onde irá caso esteja OK.
@@ -53,8 +52,7 @@ class PersonCreate(CreateView):
     success_url = reverse_lazy('person_list')
 
 
-@method_decorator(login_required, name='dispatch')
-class PersonUpdate(UpdateView):
+class PersonUpdate(LoginRequiredMixin, UpdateView):
     """
     Similar ao CreateView, apenas implementamos o método get_success_url ao invés de definir success_url, assim temos
     mais controle no caso de sucesso.
@@ -68,8 +66,7 @@ class PersonUpdate(UpdateView):
         return reverse_lazy('person_list')
 
 
-@method_decorator(login_required, name='dispatch')
-class PersonDelete(DeleteView):
+class PersonDelete(LoginRequiredMixin, DeleteView):
     model = Person
     success_url = reverse_lazy('person_list')
 

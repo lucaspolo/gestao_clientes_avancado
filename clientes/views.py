@@ -21,6 +21,19 @@ class PersonList(ListView):
 
     ordering = ['-salary']
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ja_acessou = self.request.session.get('ja_acessou')
+
+        if not ja_acessou:
+            context['message'] = 'Seja bem-vindo'
+            self.request.session['ja_acessou'] = True
+        else:
+            context['message'] = 'Seja bem-vindo novamente'
+
+        return context
+
 
 class RichPeopleList(ListView):
     """

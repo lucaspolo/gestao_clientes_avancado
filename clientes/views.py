@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -80,11 +80,16 @@ class ProdutoBulk(View):
         produtos = ['Banana', 'Maça', 'Limão', 'Laranja', 'Pera', 'Melancia']
         lista_produtos = []
 
-        for produto in produtos:
-            p = Produto(descricao=produto, preco=10)
-            lista_produtos.append(p)
+        response = render_to_response('home.html')
 
-        Produto.objects.bulk_create(lista_produtos)
+        if not request.COOKIES.get('produto_bulk'):
 
-        return redirect('person_list')
+            for produto in produtos:
+                p = Produto(descricao=produto, preco=10)
+                lista_produtos.append(p)
 
+            Produto.objects.bulk_create(lista_produtos)
+
+            response.set_cookie('produto_bulk', 'True', max_age=24*60*60)
+
+        return response

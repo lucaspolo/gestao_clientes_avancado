@@ -1,11 +1,14 @@
+import boto3
+from decouple import config
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render_to_response, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
 
+from clientes.forms import SmsForm
 from produtos.models import Produto
 from .models import Person
 
@@ -106,3 +109,30 @@ class ProdutoBulk(View):
             response.set_cookie('produto_bulk', 'True', max_age=24*60*60)
 
         return response
+
+
+@login_required
+def sms(request):
+    message = ""
+    if request.method == 'POST':
+        form = SmsForm(request.POST)
+        if form.is_valid():
+            print('Enviando SMS para: ' + form.data['telefone'])
+
+            client = boto3.client(
+                "sns",
+                aws_access_key_id=config('SMS_AWS_ID'),
+                aws_secret_access_key=config('SMS_AWS_KEY'),
+                region_name="us-east-1"
+            )
+
+            client.publish(
+                PhoneNumber=form.data['telefone'],
+                Message=form.data['mensagem']
+            )
+
+            message = "Enviado"
+            form = SmsForm()
+    else:
+        form = SmsForm()
+    return render(request, 'sms.html', {'form': form, 'message': message })

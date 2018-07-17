@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
-from django.template.loader import get_template
+from django.template.loader import render_to_string
 
 from produtos.models import Produto
 
@@ -37,13 +37,14 @@ class Person(models.Model):
             'cliente': self,
         }
 
-        message = get_template("emails/novo_usuario.html").render(ctx)
+        plain_message = render_to_string('clientes/emails/novo_usuario.txt', ctx)
+        html_message = render_to_string("clientes/emails/novo_usuario.html", ctx)
 
         send_mail(
             'Nova cliente cadastrado!',
-            message,
+            plain_message,
             settings.EMAIL_HOST_USER,
             [settings.EMAIL_HOST_USER],
             fail_silently=False,
-            html_message=message,
+            html_message=html_message,
         )

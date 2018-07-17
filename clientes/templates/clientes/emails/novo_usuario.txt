@@ -1,0 +1,2 @@
+Um novo cliente foi cadastrado.
+O cliente {{ cliente.first_name }} {{ cliente.last_name }} foi cadastrado no sistema.

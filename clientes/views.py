@@ -1,7 +1,9 @@
 import boto3
 from decouple import config
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.shortcuts import redirect, render_to_response, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -129,6 +131,14 @@ def sms(request):
             client.publish(
                 PhoneNumber=form.data['telefone'],
                 Message=form.data['mensagem']
+            )
+
+            send_mail(
+                'SMS Enviado',
+                f"Um SMS foi enviado para: { form.data['telefone'] }: { form.data['mensagem'] }",
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
             )
 
             message = "Enviado"

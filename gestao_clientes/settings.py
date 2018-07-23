@@ -56,6 +56,10 @@ EMAIL_HOST_USER = config('EMAIL')
 EMAIL_HOST_PASSWORD = config('SENHA_EMAIL')
 EMAIL_PORT = 587
 
+ADMINS = [
+    ('Lucas Polo', 'polocursodjango@gmail.com'),
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

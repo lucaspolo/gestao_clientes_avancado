@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from decouple import config
 from django.contrib import admin
+from django.core.mail import mail_admins
 from django.urls import path, include
 from clientes import urls as clientes_urls
 from produtos import urls as produtos_urls
@@ -43,3 +45,14 @@ if settings.DEBUG:
 admin.site.site_header = "Gestão de Clientes"
 admin.site.index_title = "Administração"
 admin.site.site_title = "Seja bem vindo ao Gestão de Clientes"
+
+app_version = config('HEROKU_RELEASE_VERSION', default=None)
+
+if app_version:
+    mail_admins(
+        f'Aplicação iniciada {app_version}',
+        f"A aplicação foi iniciada com sucesso, versao {app_version}",
+        fail_silently=False
+    )
+else:
+    print('Subindo aplicação')

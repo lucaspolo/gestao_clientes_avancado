@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from decouple import config
+from django.conf.urls import url
 from django.contrib import admin
 from django.core.mail import mail_admins
 from django.urls import path, include
@@ -33,6 +34,7 @@ urlpatterns = [
                   path('login/', auth_views.login, name='login'),
                   path('admin/', admin.site.urls),
                   path('', include('django.contrib.auth.urls')),
+                  path('accounts/', include('allauth.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

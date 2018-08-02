@@ -17,7 +17,6 @@ from dj_database_url import parse as dburl
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -37,10 +36,17 @@ INTERNAL_IPS = ['127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
     'bootstrapform',
     'home',
     'clientes',
@@ -48,6 +54,8 @@ INSTALLED_APPS = [
     'vendas',
     'debug_toolbar',
 ]
+
+SITE_ID = 1
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
@@ -90,8 +98,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gestao_clientes.wsgi.application'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
+WSGI_APPLICATION = 'gestao_clientes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -120,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -133,7 +144,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

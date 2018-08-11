@@ -4,7 +4,7 @@
     <h1>Novo pedido</h1>
 
 
-    <form method="post">
+    <form method="post" action="{% url 'novo-pedido' %}">
         {% csrf_token %}
 
         <h2>Cabeçalho do pedido numero {{  venda_obj.numero }}</h2>
@@ -23,25 +23,33 @@
 {% endblock main %}
 
 {% block extra %}
-<h2>Listagem de itens</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Quantidade</th>
-                <th scope="col">Desconto</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for item in itens %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.produto.descricao }}</td>
-                <td>{{ item.quantidade }}</td>
-                <td>{{ item.desconto }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if venda_obj %}
+        <form action="{% url 'novo-item-pedido' venda_obj.id %}" method="post">
+            {% csrf_token %}
+            {{ form_item }}
+            <button class="btn btn-info">Incluir</button>
+        </form>
+
+        <h2>Listagem de itens</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Desconto</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in itens %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.produto.descricao }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.desconto }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock extra %}

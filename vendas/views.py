@@ -34,3 +34,11 @@ class DashboardView(PermissionRequiredMixin, View):
             'numero_de_pedidos_nfe_emitida': numero_de_pedidos_nfe_emitida,
         }
         return render(request, 'vendas/dashboard.html', data)
+
+class NovoPedido(View):
+
+    def get(self, request):
+        return render(request, 'vendas/novo-pedido.html')
+
+    def post(self, request):
+        return render(request, 'vendas/novo-pedido.html')

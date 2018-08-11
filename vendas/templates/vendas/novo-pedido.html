@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h1>Novo pedido</h1>
+
+
+    <form method="post">
+        {% csrf_token %}
+
+        <h2>Cabeçalho do pedido</h2>
+        <input type="text" name="numero">
+        <input type="text" name="desconto">
+
+        <button type="submit">Enviar</button>
+    </form>
+{% endblock main %}

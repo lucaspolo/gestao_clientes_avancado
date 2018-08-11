@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from vendas.models import Venda
+from vendas.models import Venda, ItemDoPedido
+from .forms import ItemPedidoForm
 
 
 class DashboardView(PermissionRequiredMixin, View):
@@ -43,12 +44,16 @@ class NovoPedido(View):
     def post(self, request):
         data = {}
 
+        data['form_item'] = ItemPedidoForm()
         data['numero'] = request.POST['numero']
-        data['desconto'] = request.POST['desconto']
+        data['desconto'] = float(request.POST['desconto'])
         data['venda'] = request.POST['venda_id']
 
         if data['venda']:
             venda = Venda.objects.get(id=data['venda'])
+            venda.desconto = data['desconto']
+            venda.numero = data['numero']
+            venda.save()
         else:
             venda = Venda.objects.create(
                 numero=data['numero'],
@@ -60,3 +65,29 @@ class NovoPedido(View):
         data['itens'] = itens
 
         return render(request, 'vendas/novo-pedido.html', data)
+
+
+class NovoItemPedido(View):
+
+    def get(self, request, pk):
+        pass
+
+    def post(self, request, venda):
+        data = {}
+
+        item = ItemDoPedido.objects.create(
+            produto_id=request.POST['produto_id'], quantidade=request.POST['quantidade'],
+            desconto=request.POST['desconto'], venda_id=venda
+        )
+
+        data['item'] = item
+        data['form_item'] = ItemPedidoForm()
+        data['numero'] = item.venda.numero
+        data['desconto'] = item.venda.desconto
+        data['venda'] = item.venda.id
+        data['venda_obj'] = item.venda
+        data['itens'] = item.venda.itemdopedido_set.all()
+
+        return render(
+            request, 'vendas/novo-pedido.html', data
+        )

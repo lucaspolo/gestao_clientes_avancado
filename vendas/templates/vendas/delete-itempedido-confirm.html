@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>Tem certeza que deseja excluir o item do pedido {{ item_pedido }}?</h2>
+
+    <form action="{% url 'delete-item-pedido' item_pedido.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+    </form>
+{% endblock main %}

@@ -38,6 +38,7 @@
                     <th scope="col">Descrição</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Desconto</th>
+                    <th scope="col">Excluir?</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +48,9 @@
                     <td>{{ item.produto.descricao }}</td>
                     <td>{{ item.quantidade }}</td>
                     <td>{{ item.desconto }}</td>
+                    <td>
+                        <a href="{% url 'delete-item-pedido' item.id %}">Excluir</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h2>Tem certeza que deseja excluir o pedido {{ venda }}?</h2>
+
+    <form action="{% url 'delete-pedido' venda.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+    </form>
+{% endblock main %}

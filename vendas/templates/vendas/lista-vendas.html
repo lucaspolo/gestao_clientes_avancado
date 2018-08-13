@@ -21,8 +21,13 @@
                 <td>
                     <a href="{% url 'edit-item-pedido' venda.id %}">Editar</a>
                 </td>
+                <td>
+                    <a href="{% url 'delete-pedido' venda.id %}">Excluir</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <a href="{% url 'novo-pedido' %}">Nova venda</a>
 {% endblock main %}

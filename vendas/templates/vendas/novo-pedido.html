@@ -57,9 +57,9 @@
                             <td>{{ item.produto.descricao }}</td>
                             <td>{{ item.quantidade }}</td>
                             <td>{{ item.desconto }}</td>
-{#                            <td>#}
-{#                                <a href="{% url 'edit-item-pedido' item.id %}"> <i class="fa fa-pencil"></i> </a>#}
-{#                            </td>#}
+                            <td>
+                                <a href="{% url 'edit-item-pedido' item.id %}"> <i class="fa fa-pencil"></i> </a>
+                            </td>
                             <td>
                                 <a href="{% url 'delete-item-pedido' item.id %}">Excluir</a>
                             </td>

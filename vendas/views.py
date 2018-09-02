@@ -74,11 +74,18 @@ class NovoItemPedido(View):
 
     def post(self, request, venda):
         data = {}
+        item = None
 
-        item = ItemDoPedido.objects.create(
-            produto_id=request.POST['produto_id'], quantidade=request.POST['quantidade'],
-            desconto=request.POST['desconto'], venda_id=venda
-        )
+        if ItemDoPedido.objects.filter(produto_id=request.POST['produto_id']).exists():
+            item = ItemDoPedido.objects.get(produto_id=request.POST['produto_id'])
+            item.quantidade += float(request.POST['quantidade'])
+            item.desconto = float(request.POST['desconto'])
+            item.save()
+        else:
+            item = ItemDoPedido.objects.create(
+                produto_id=request.POST['produto_id'], quantidade=request.POST['quantidade'],
+                desconto=request.POST['desconto'], venda_id=venda
+            )
 
         data['item'] = item
         data['form_item'] = ItemPedidoForm()

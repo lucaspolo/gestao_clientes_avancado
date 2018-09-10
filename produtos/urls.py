@@ -1,6 +1,6 @@
 from django.urls import path
 
-from produtos.views import api
+from produtos.views import api, APICBV
 
 urlpatterns = [
     # path('', RedirectView.as_view(url=reverse_lazy('person_list')), name="root"),
@@ -12,4 +12,5 @@ urlpatterns = [
     # path('delete/<int:pk>/', PersonDelete.as_view(), name="persons_delete"),
     # path('produto_bulk/', ProdutoBulk.as_view(), name="produto_delete"),
     path('api/', api, name="api"),
+    path('apicbv/<int:id>/', APICBV.as_view(), name="apicbv"),
 ]

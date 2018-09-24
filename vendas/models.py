@@ -48,6 +48,9 @@ class ItemDoPedido(models.Model):
     quantidade = models.FloatField()
     desconto = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
+    class Meta:
+        verbose_name = "Itens do Pedido"
+
     def __str__(self):
         return f"{self.venda.numero} - {self.produto.descricao} ({self.quantidade})"
 

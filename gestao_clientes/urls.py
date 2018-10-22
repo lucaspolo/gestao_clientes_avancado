@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from decouple import config
-from django.conf.urls import url
 from django.contrib import admin
 from django.core.mail import mail_admins
 from django.urls import path, include
@@ -31,8 +30,7 @@ urlpatterns = [
                   path('clientes/', include(clientes_urls), name="clientes"),
                   path('produtos/', include(produtos_urls), name="produtos"),
                   path('vendas/', include(vendas_urls), name="vendas"),
-                  path('login/', auth_views.login, name='login'),
-                  #path('grappelli/', include('grappelli.urls')),
+                  path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('admin/', admin.site.urls),
                   path('', include('django.contrib.auth.urls')),
                   path('accounts/', include('allauth.urls')),

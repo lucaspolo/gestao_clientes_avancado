@@ -46,14 +46,3 @@ if settings.DEBUG:
 admin.site.site_header = "Gestão de Clientes"
 admin.site.index_title = "Administração"
 admin.site.site_title = "Seja bem vindo ao Gestão de Clientes"
-
-app_version = config('HEROKU_RELEASE_VERSION', default=None)
-
-if app_version:
-    mail_admins(
-        f'Aplicação iniciada {app_version}',
-        f"A aplicação foi iniciada com sucesso, versao {app_version}",
-        fail_silently=False
-    )
-else:
-    print('Subindo aplicação')

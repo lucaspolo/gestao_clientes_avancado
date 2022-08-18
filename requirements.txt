@@ -1,4 +1,4 @@
 -r requirements-dev.txt
 gunicorn
-psycopg2==2.7.3.2
+psycopg2==2.9.3
 
